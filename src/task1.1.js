@@ -1,5 +1,5 @@
-const readline = require('readline');
-const { Transform } = require('stream');
+import readline from 'readline';
+import { Transform } from 'stream';
 
 const reverseString = (input) => {
     let reversedInput = "";

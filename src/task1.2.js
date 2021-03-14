@@ -1,8 +1,8 @@
-const path = require('path');
-const fs = require('fs');
-const fsPromises = fs.promises;
-const { pipeline } = require('stream');
-const csvToJson = require('csvtojson');
+import path from 'path';
+import fs from 'fs';
+import fsPromises from 'fs/promises';
+import { pipeline } from 'stream';
+import csvToJson from 'csvtojson';
 
 const csvFilePath = './src/csv/nodejs-hw1-ex1.csv';
 const jsonFilePath = './src/json/nodejs-hw1-ex1.json';
