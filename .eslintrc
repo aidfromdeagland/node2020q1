@@ -26,7 +26,7 @@
             "restParams": true,
             "spread": true,
             "superInFunctions": true,
-            "templateStrings": true,
+            "templateStrings": true
         }
     },
     "rules": {
@@ -152,8 +152,8 @@
         "prefer-template": 2,
         // Strict Mode
         "strict": [
-            2,
-            "never"
+            0,
+            "global"
         ],
         // Variables
         "no-catch-shadow": 2,
@@ -225,7 +225,7 @@
             {
                 "ignoreUrls": true,
                 "ignoreComments": false,
-                "ignorePattern": "^\\s*(const|let|var)\\s+\\w+\\s+\\=\\s+\\/.*\\/(|i|g|m|ig|im|gm|igm);?$"
+                "ignorePattern": "^\\s*(const|let|var)\\s+\\w+\\s+=\\s+\\/.*\\/(|i|g|m|ig|im|gm|igm);?$"
             }
         ],
         "max-nested-callbacks": [
