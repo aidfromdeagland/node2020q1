@@ -1,5 +1,3 @@
-'use strict';
-
 const { v4 } = require('uuid');
 const User = require('./entities/user-entity');
 
@@ -33,7 +31,10 @@ function deleteUser(id) {
 }
 
 function getAutoSuggestedUsers(loginSubstring, limit) {
-    return getAllUsers().filter(user => !user.isDeleted && user.login.includes(loginSubstring)).sort().slice(0, limit);
+    return getAllUsers()
+        .filter(user => !user.isDeleted && user.login.includes(loginSubstring))
+        .sort((a, b) => a.login.localeCompare(b.login))
+        .slice(0, limit);
 }
 
 module.exports = {

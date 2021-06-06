@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 const { userRouter } = require('./routes/user-route');
 const { suggestionRouter } = require('./routes/suggestion-route');
 
-dotenv.config('../.env');
+dotenv.config();
 const port = process.env.PORT;
 const app = express();
 

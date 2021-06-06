@@ -1,5 +1,3 @@
-'use strict';
-
 class User {
     constructor(id, userData = {}) {
         const { login, password, age } = userData;
@@ -14,9 +12,9 @@ class User {
     update(updatedData = {}) {
         const { login, password, age } = updatedData;
 
-        this.login = login || this.login;
-        this.password = password || this.password;
-        this.age = age || this.age;
+        if (login) this.login = login;
+        if (password) this.password = password;
+        if (age) this.age = age;
     }
 
     delete() {
