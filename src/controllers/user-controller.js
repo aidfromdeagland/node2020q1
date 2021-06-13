@@ -1,8 +1,8 @@
 const userService = require('../services/user-service/user-service');
 const { StatusCodes } = require('http-status-codes');
 
-function handleIdParam(req, res, next, id) {
-    const user = userService.getUser(id);
+async function handleIdParam(req, res, next, id) {
+    const user = await userService.getUser(id);
 
     if (user) {
         return next();
@@ -11,31 +11,38 @@ function handleIdParam(req, res, next, id) {
     res.status(StatusCodes.NOT_FOUND).send({ message: `There is no user with id ${id}` });
 }
 
-function getUser(req, res) {
+async function getUser(req, res) {
     const userId = req.params.id;
-    res.send(userService.getUser(userId));
+    const user = await userService.getUser(userId);
+
+    res.send(user);
 }
 
-function updateUser(req, res) {
+async function updateUser(req, res) {
     const userId = req.params.id;
-    res.send(userService.updateUser(userId, req.body));
+    const updatedUser = await userService.updateUser(userId, req.body);
+
+    res.send(updatedUser);
 }
 
-function deleteUser(req, res) {
+async function deleteUser(req, res) {
     const userId = req.params.id;
-    userService.deleteUser(userId);
+    await userService.deleteUser(userId);
 
     res.status(StatusCodes.NO_CONTENT).send();
 }
 
-function postUser(req, res) {
-    const newUser = req.body;
-    res.status(StatusCodes.CREATED).send(userService.addUser(newUser));
+async function postUser(req, res) {
+    const newUserData = req.body;
+    const newUser = await userService.addUser(newUserData);
+
+    res.status(StatusCodes.CREATED).send(newUser);
 }
 
-function suggestUsers(req, res) {
+async function suggestUsers(req, res) {
     const { loginSubstring, limit } = req.query;
-    const suggestions = userService.getAutoSuggestedUsers(loginSubstring, limit);
+    const suggestions = await userService.getAutoSuggestedUsers(loginSubstring, limit);
+
     res.send(suggestions);
 }
 

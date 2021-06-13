@@ -1,40 +1,27 @@
-const { v4 } = require('uuid');
-const User = require('./entities/user-entity');
-
-const usersCollection = new Map();
+const database = require('../../data-access/database');
 
 function getAllUsers() {
-    return Array.from(usersCollection.values());
+    return database.getAllUsers();
 }
 
 function getUser(id) {
-    return usersCollection.get(id);
+    return database.getUser(id);
 }
 
 function addUser(userData) {
-    const userId = v4();
-    const newUser = new User(userId, userData);
-    usersCollection.set(userId, newUser);
-
-    return newUser;
+    return database.addUser(userData);
 }
 
 function updateUser(id, userData) {
-    const userToUpdate = usersCollection.get(id);
-    userToUpdate.update(userData);
-
-    return userToUpdate;
+    return database.updateUser(id, userData);
 }
 
 function deleteUser(id) {
-    getUser(id).delete();
+    return database.deleteUser(id);
 }
 
 function getAutoSuggestedUsers(loginSubstring, limit) {
-    return getAllUsers()
-        .filter(user => !user.isDeleted && user.login.includes(loginSubstring))
-        .sort((a, b) => a.login.localeCompare(b.login))
-        .slice(0, limit);
+    return database.getAutoSuggestedUsers(loginSubstring, limit);
 }
 
 module.exports = {
@@ -45,4 +32,3 @@ module.exports = {
     getAllUsers,
     getAutoSuggestedUsers
 };
-
