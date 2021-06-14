@@ -1,5 +1,3 @@
-'use-strict';
-
 const Joi = require('joi');
 
 const passwordPattern = new RegExp('([0-9].*[a-zA-Z])\|([a-zA-Z].*[0-9])');
