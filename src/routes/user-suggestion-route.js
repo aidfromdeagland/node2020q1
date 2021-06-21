@@ -1,12 +1,9 @@
 const express = require('express');
 const { suggestUsers } = require('../controllers/user-controller');
 
-const suggestionRouter = express.Router();
+const userSuggestionRouter = express.Router();
 
-suggestionRouter.route('/')
+userSuggestionRouter.route('/')
     .get(suggestUsers);
 
-
-module.exports = {
-    suggestionRouter
-};
+module.exports = userSuggestionRouter;

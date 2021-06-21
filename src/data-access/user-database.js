@@ -4,9 +4,9 @@ const initialUsers = require('./initial-data/users');
 
 userModel.sync({ force: true }).then(() => {
     userModel.bulkCreate(initialUsers).then(() => {
-        console.info('table created');
+        console.info('user table created');
     }).catch((err) => {
-        console.error(`table creation failed: ${err}`);
+        console.error(`user table creation failed: ${err}`);
     });
 });
 

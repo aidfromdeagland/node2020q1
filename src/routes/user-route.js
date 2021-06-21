@@ -16,6 +16,4 @@ userRouter.route('/:id')
 userRouter.route('/')
     .post(validate(userSchema), postUser);
 
-module.exports = {
-    userRouter
-};
+module.exports = userRouter;

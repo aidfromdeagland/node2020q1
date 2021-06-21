@@ -1,31 +1,27 @@
 const { Model, DataTypes } = require('sequelize');
 const { sequelize } = require('../data-access/connection');
 
-class userModel extends Model {}
+class groupModel extends Model {}
 
-userModel.init(
+groupModel.init(
     {
         id: {
             primaryKey: true,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
-        login: {
+        name: {
             type: DataTypes.STRING,
             unique: true
         },
-        password: DataTypes.STRING,
-        age: DataTypes.INTEGER,
-        isDeleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            field: 'is_deleted'
+        permissions: {
+            type: DataTypes.ARRAY(DataTypes.ENUM(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']))
         }
     },
     {   sequelize,
-        modelName: 'user',
+        modelName: 'group',
         timestamps: false
     }
 );
 
-module.exports = userModel;
+module.exports = groupModel;

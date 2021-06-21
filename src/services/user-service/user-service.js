@@ -1,4 +1,4 @@
-const database = require('../../data-access/database');
+const database = require('../../data-access/user-database');
 
 function getAllUsers() {
     return database.getAllUsers();
