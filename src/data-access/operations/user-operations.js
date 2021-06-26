@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
-const userModel = require('../models/user-model');
-const initialUsers = require('./initial-data/users');
+const userModel = require('../../models/user-model');
+const initialUsers = require('../../../text/fixtures/users');
 
 userModel.sync({ force: true }).then(() => {
     userModel.bulkCreate(initialUsers).then(() => {
@@ -10,29 +10,18 @@ userModel.sync({ force: true }).then(() => {
     });
 });
 
-async function getAllUsers() {
-    const users = await userModel.findAll({
-        where: { isDeleted: false }
-    });
-
-    return users;
-}
-
 async function getUser(id) {
-    const user = await userModel.findByPk(id);
-
-    return user;
+    return userModel.findByPk(id);
 }
 
 async function addUser(userData) {
-    return await userModel.create(userData);
+    return userModel.create(userData);
 }
 
 async function updateUser(id, userData) {
     await userModel.update(userData, {
         where: { id }
     });
-    return await userModel.findByPk(id);
 }
 
 async function deleteUser(id) {
@@ -43,15 +32,17 @@ async function deleteUser(id) {
 }
 
 async function getAutoSuggestedUsers(loginSubstring, limit) {
-    const suggestedUsers = await userModel.findAll({
-        where: { [Op.and]: [{ login: { [Op.substring]: loginSubstring } }, { isDeleted: false }] },
+    return userModel.findAll({
+        where: {
+            login: { [Op.like]: `${loginSubstring}%` },
+            isDeleted: false
+        },
+        order: [['login', 'ASC']],
         limit
     });
-    return suggestedUsers;
 }
 
 module.exports = {
-    getAllUsers,
     getUser,
     addUser,
     updateUser,

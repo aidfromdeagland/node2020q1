@@ -1,5 +1,5 @@
-const groupModel = require('../models/group-model');
-const initialGroups = require('./initial-data/groups');
+const groupModel = require('../../models/group-model');
+const initialGroups = require('../../../text/fixtures/groups');
 
 groupModel.sync({ force: true }).then(() => {
     groupModel.bulkCreate(initialGroups).then(() => {
@@ -11,30 +11,25 @@ groupModel.sync({ force: true }).then(() => {
 
 
 async function getAllGroups() {
-    const groups = await groupModel.findAll();
-
-    return groups;
+    return groupModel.findAll();
 }
 
 async function getGroup(id) {
-    const group = await groupModel.findByPk(id);
-
-    return group;
+    return groupModel.findByPk(id);
 }
 
 async function addGroup(groupData) {
-    return await groupModel.create(groupData);
+    return groupModel.create(groupData);
 }
 
 async function updateGroup(id, groupData) {
-    await groupModel.update(groupData, {
+    return groupModel.update(groupData, {
         where: { id }
     });
-    return await groupModel.findByPk(id);
 }
 
 async function deleteGroup(id) {
-    await groupModel.destroy({ where: { id } });
+    return groupModel.destroy({ where: { id } });
 }
 
 module.exports = {

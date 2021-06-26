@@ -1,23 +1,25 @@
-const database = require('../../data-access/group-database');
+const database = require('../../data-access/operations/group-operations');
 
-function getAllGroups() {
+async function getAllGroups() {
     return database.getAllGroups();
 }
 
-function getGroup(id) {
+async function getGroup(id) {
     return database.getGroup(id);
 }
 
-function addGroup(groupData) {
+async function addGroup(groupData) {
     return database.addGroup(groupData);
 }
 
-function updateGroup(id, groupData) {
-    return database.updateGroup(id, groupData);
+async function updateGroup(id, groupData) {
+    await database.updateGroup(id, groupData);
+    return id;
 }
 
-function deleteGroup(id) {
-    return database.deleteGroup(id);
+async function deleteGroup(id) {
+    await database.deleteGroup(id);
+    return id;
 }
 
 module.exports = {

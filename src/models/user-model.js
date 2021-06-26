@@ -1,9 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../data-access/connection');
 
-class userModel extends Model {}
-
-userModel.init(
+const userModel =  sequelize.define(
+    'user',
     {
         id: {
             primaryKey: true,
@@ -22,8 +21,7 @@ userModel.init(
             field: 'is_deleted'
         }
     },
-    {   sequelize,
-        modelName: 'user',
+    {
         timestamps: false
     }
 );

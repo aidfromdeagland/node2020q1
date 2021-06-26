@@ -1,9 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../data-access/connection');
 
-class groupModel extends Model {}
-
-groupModel.init(
+const groupModel = sequelize.define(
+    'group',
     {
         id: {
             primaryKey: true,
@@ -18,8 +17,7 @@ groupModel.init(
             type: DataTypes.ARRAY(DataTypes.ENUM(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']))
         }
     },
-    {   sequelize,
-        modelName: 'group',
+    {
         timestamps: false
     }
 );

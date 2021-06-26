@@ -1,53 +1,62 @@
 const userService = require('../services/user-service/user-service');
 const { StatusCodes } = require('http-status-codes');
 
-async function handleIdParam(req, res, next, id) {
-    const user = await userService.getUser(id);
+async function getUser(req, res, next) {
+    try {
+        const userId = req.params.id;
+        const user = await userService.getUser(userId);
 
-    if (user) {
-        return next();
+        res.send(user);
+    } catch (error) {
+        return next(error.message);
     }
-
-    res.status(StatusCodes.NOT_FOUND).send({ message: `There is no user with id ${id}` });
 }
 
-async function getUser(req, res) {
-    const userId = req.params.id;
-    const user = await userService.getUser(userId);
+async function updateUser(req, res, next) {
+    try {
+        const userId = req.params.id;
+        const updatedUser = await userService.updateUser(userId, req.body);
 
-    res.send(user);
+        res.send(updatedUser);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function updateUser(req, res) {
-    const userId = req.params.id;
-    const updatedUser = await userService.updateUser(userId, req.body);
+async function deleteUser(req, res, next) {
+    try {
+        const userId = req.params.id;
+        await userService.deleteUser(userId);
 
-    res.send(updatedUser);
+        res.status(StatusCodes.NO_CONTENT).send();
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function deleteUser(req, res) {
-    const userId = req.params.id;
-    await userService.deleteUser(userId);
+async function postUser(req, res, next) {
+    try {
+        const newUserData = req.body;
+        const newUser = await userService.addUser(newUserData);
 
-    res.status(StatusCodes.NO_CONTENT).send();
+        res.status(StatusCodes.CREATED).send(newUser);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function postUser(req, res) {
-    const newUserData = req.body;
-    const newUser = await userService.addUser(newUserData);
+async function suggestUsers(req, res, next) {
+    try {
+        const { loginSubstring, limit } = req.query;
+        const suggestions = await userService.getAutoSuggestedUsers(loginSubstring, limit);
 
-    res.status(StatusCodes.CREATED).send(newUser);
-}
-
-async function suggestUsers(req, res) {
-    const { loginSubstring, limit } = req.query;
-    const suggestions = await userService.getAutoSuggestedUsers(loginSubstring, limit);
-
-    res.send(suggestions);
+        res.send(suggestions);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
 module.exports = {
-    handleIdParam,
     getUser,
     updateUser,
     deleteUser,

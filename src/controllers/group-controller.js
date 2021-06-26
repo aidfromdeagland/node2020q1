@@ -1,46 +1,58 @@
 const groupService = require('../services/group-service/group-service');
 const { StatusCodes } = require('http-status-codes');
 
-async function handleIdParam(req, res, next, id) {
-    const group = await groupService.getGroup(id);
+async function getAllGroups(req, res, next) {
+    try {
+        const groups = await groupService.getAllGroups();
 
-    if (group) {
-        return next();
+        res.send(groups);
+    } catch (error) {
+        return next(error.message);
     }
-
-    res.status(StatusCodes.NOT_FOUND).send({ message: `There is no group with id ${id}` });
 }
 
-async function getGroup(req, res) {
-    const groupId = req.params.id;
-    const group = await groupService.getGroup(groupId);
+async function getGroup(req, res, next) {
+    try {
+        const group = await groupService.getGroup(req.params.id);
 
-    res.send(group);
+        res.send(group);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function updateGroup(req, res) {
-    const groupId = req.params.id;
-    const updatedGroup = await groupService.updateGroup(groupId, req.body);
+async function updateGroup(req, res, next) {
+    try {
+        const updatedGroup = await groupService.updateGroup(req.params.id, req.body);
 
-    res.send(updatedGroup);
+        res.send(updatedGroup);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function deleteGroup(req, res) {
-    const groupId = req.params.id;
-    await groupService.deleteGroup(groupId);
+async function deleteGroup(req, res, next) {
+    try {
+        await groupService.deleteGroup(req.params.id);
 
-    res.status(StatusCodes.NO_CONTENT).send();
+        res.status(StatusCodes.NO_CONTENT).send();
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
-async function postGroup(req, res) {
-    const newGroupData = req.body;
-    const newGroup = await groupService.addGroup(newGroupData);
+async function postGroup(req, res, next) {
+    try {
+        const newGroup = await groupService.addGroup(req.body);
 
-    res.status(StatusCodes.CREATED).send(newGroup);
+        res.status(StatusCodes.CREATED).send(newGroup);
+    } catch (error) {
+        return next(error.message);
+    }
 }
 
 module.exports = {
-    handleIdParam,
+    getAllGroups,
     getGroup,
     updateGroup,
     deleteGroup,
