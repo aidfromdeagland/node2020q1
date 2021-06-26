@@ -15,9 +15,9 @@ async function getUser(req, res, next) {
 async function updateUser(req, res, next) {
     try {
         const userId = req.params.id;
-        const updatedUser = await userService.updateUser(userId, req.body);
+        await userService.updateUser(req.params.id, req.body);
 
-        res.send(updatedUser);
+        res.send(userId);
     } catch (error) {
         return next(error.message);
     }

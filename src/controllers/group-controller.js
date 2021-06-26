@@ -51,10 +51,22 @@ async function postGroup(req, res, next) {
     }
 }
 
+async function addUsersToGroup(req, res, next) {
+    try {
+        const { groupId, usersIds } = req.body;
+        await groupService.addUsersToGroup(groupId, usersIds);
+
+        res.status(StatusCodes.OK).send();
+    } catch (error) {
+        return next(error.message);
+    }
+}
+
 module.exports = {
     getAllGroups,
     getGroup,
     updateGroup,
     deleteGroup,
-    postGroup
+    postGroup,
+    addUsersToGroup
 };

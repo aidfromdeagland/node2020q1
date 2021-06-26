@@ -1,17 +1,16 @@
 const { Op } = require('sequelize');
-const userModel = require('../../models/user-model');
-const initialUsers = require('../../../text/fixtures/users');
+const { userModel, groupModel } = require('../../models');
 
-userModel.sync({ force: true }).then(() => {
-    userModel.bulkCreate(initialUsers).then(() => {
-        console.info('user table created');
-    }).catch((err) => {
-        console.error(`user table creation failed: ${err}`);
-    });
-});
+const groupAssociation = {
+    model: groupModel,
+    attributes: ['id', 'name'],
+    through: {
+        attributes: []
+    }
+};
 
 async function getUser(id) {
-    return userModel.findByPk(id);
+    return userModel.findByPk(id, { include: groupAssociation });
 }
 
 async function addUser(userData) {

@@ -1,21 +1,19 @@
-const groupModel = require('../../models/group-model');
-const initialGroups = require('../../../text/fixtures/groups');
+const { userModel, groupModel, userGroupModel } = require('../../models');
 
-groupModel.sync({ force: true }).then(() => {
-    groupModel.bulkCreate(initialGroups).then(() => {
-        console.info('group table created');
-    }).catch((err) => {
-        console.error(`group table creation failed: ${err}`);
-    });
-});
-
+const userAssociation = {
+    model: userModel,
+    attributes: ['id', 'login'],
+    through: {
+        attributes: []
+    }
+};
 
 async function getAllGroups() {
-    return groupModel.findAll();
+    return groupModel.findAll({ include: userAssociation });
 }
 
 async function getGroup(id) {
-    return groupModel.findByPk(id);
+    return groupModel.findByPk(id, { include: userAssociation });
 }
 
 async function addGroup(groupData) {
@@ -32,11 +30,19 @@ async function deleteGroup(id) {
     return groupModel.destroy({ where: { id } });
 }
 
+async function addUsersToGroup(groupId, usersIds) {
+    await groupModel.sequelize.transaction(async transaction => {
+        const groupedUsers = usersIds.map(userId => ({ group_id: groupId, user_id: userId  }));
+        await userGroupModel.bulkCreate(groupedUsers, { transaction });
+    });
+}
+
 module.exports = {
     getAllGroups,
     getGroup,
     addGroup,
     updateGroup,
-    deleteGroup
+    deleteGroup,
+    addUsersToGroup
 };
 

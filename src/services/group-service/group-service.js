@@ -14,12 +14,14 @@ async function addGroup(groupData) {
 
 async function updateGroup(id, groupData) {
     await database.updateGroup(id, groupData);
-    return id;
 }
 
 async function deleteGroup(id) {
     await database.deleteGroup(id);
-    return id;
+}
+
+async function addUsersToGroup(groupId, userIds) {
+    await database.addUsersToGroup(groupId, userIds);
 }
 
 module.exports = {
@@ -27,5 +29,6 @@ module.exports = {
     addGroup,
     updateGroup,
     deleteGroup,
-    getAllGroups
+    getAllGroups,
+    addUsersToGroup
 };

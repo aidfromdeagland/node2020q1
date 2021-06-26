@@ -10,12 +10,10 @@ async function addUser(userData) {
 
 async function updateUser(id, userData) {
     await database.updateUser(id, userData);
-    return id;
 }
 
 async function deleteUser(id) {
     await database.deleteUser(id);
-    return id;
 }
 
 async function getAutoSuggestedUsers(loginSubstring, limit) {
