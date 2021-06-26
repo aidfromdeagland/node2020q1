@@ -1,24 +1,20 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../data-access/connection');
 
-const userModel =  sequelize.define(
-    'user',
+const groupModel = sequelize.define(
+    'group',
     {
         id: {
             primaryKey: true,
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
         },
-        login: {
+        name: {
             type: DataTypes.STRING,
             unique: true
         },
-        password: DataTypes.STRING,
-        age: DataTypes.INTEGER,
-        isDeleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false,
-            field: 'is_deleted'
+        permissions: {
+            type: DataTypes.ARRAY(DataTypes.ENUM(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']))
         }
     },
     {
@@ -26,4 +22,4 @@ const userModel =  sequelize.define(
     }
 );
 
-module.exports = userModel;
+module.exports = groupModel;

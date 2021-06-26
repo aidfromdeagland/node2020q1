@@ -1,26 +1,22 @@
-const database = require('../../data-access/database');
+const database = require('../../data-access/operations/user-operations');
 
-function getAllUsers() {
-    return database.getAllUsers();
-}
-
-function getUser(id) {
+async function getUser(id) {
     return database.getUser(id);
 }
 
-function addUser(userData) {
+async function addUser(userData) {
     return database.addUser(userData);
 }
 
-function updateUser(id, userData) {
-    return database.updateUser(id, userData);
+async function updateUser(id, userData) {
+    await database.updateUser(id, userData);
 }
 
-function deleteUser(id) {
-    return database.deleteUser(id);
+async function deleteUser(id) {
+    await database.deleteUser(id);
 }
 
-function getAutoSuggestedUsers(loginSubstring, limit) {
+async function getAutoSuggestedUsers(loginSubstring, limit) {
     return database.getAutoSuggestedUsers(loginSubstring, limit);
 }
 
@@ -29,6 +25,5 @@ module.exports = {
     addUser,
     updateUser,
     deleteUser,
-    getAllUsers,
     getAutoSuggestedUsers
 };
