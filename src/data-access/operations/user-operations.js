@@ -18,13 +18,13 @@ async function addUser(userData) {
 }
 
 async function updateUser(id, userData) {
-    await userModel.update(userData, {
+    return userModel.update(userData, {
         where: { id }
     });
 }
 
 async function deleteUser(id) {
-    await userModel.update(
+    return userModel.update(
         { isDeleted: true },
         { where: { id } }
     );

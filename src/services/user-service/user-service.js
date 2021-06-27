@@ -9,11 +9,11 @@ async function addUser(userData) {
 }
 
 async function updateUser(id, userData) {
-    await database.updateUser(id, userData);
+    return database.updateUser(id, userData);
 }
 
 async function deleteUser(id) {
-    await database.deleteUser(id);
+    return await database.deleteUser(id);
 }
 
 async function getAutoSuggestedUsers(loginSubstring, limit) {
