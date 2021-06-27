@@ -13,15 +13,15 @@ async function addGroup(groupData) {
 }
 
 async function updateGroup(id, groupData) {
-    await database.updateGroup(id, groupData);
+    return database.updateGroup(id, groupData);
 }
 
 async function deleteGroup(id) {
-    await database.deleteGroup(id);
+    return database.deleteGroup(id);
 }
 
 async function addUsersToGroup(groupId, userIds) {
-    await database.addUsersToGroup(groupId, userIds);
+    return database.addUsersToGroup(groupId, userIds);
 }
 
 module.exports = {

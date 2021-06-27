@@ -1,53 +1,58 @@
 const groupService = require('../services/group-service/group-service');
 const { StatusCodes } = require('http-status-codes');
+const { logControllerError } = require('../middlewares/logger');
+
+function handleNullGroup(req, res) {
+    res.status(StatusCodes.NOT_FOUND).send({ message: `There is no group with id ${req.params.id}` });
+}
 
 async function getAllGroups(req, res, next) {
     try {
         const groups = await groupService.getAllGroups();
-
-        res.send(groups);
+        return res.send(groups);
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'getAllGroups', arguments);
+        return next(error);
     }
 }
 
 async function getGroup(req, res, next) {
     try {
         const group = await groupService.getGroup(req.params.id);
-
-        res.send(group);
+        return group ? res.send(group) : handleNullGroup(req, res);
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'getGroup', arguments);
+        return next(error);
     }
 }
 
 async function updateGroup(req, res, next) {
     try {
-        const updatedGroup = await groupService.updateGroup(req.params.id, req.body);
-
-        res.send(updatedGroup);
+        const [isGroupUpdated] = await groupService.updateGroup(req.params.id, req.body);
+        return isGroupUpdated ? res.send(req.params.id) : handleNullGroup(req, res);
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'updateGroup', arguments);
+        return next(error);
     }
 }
 
 async function deleteGroup(req, res, next) {
     try {
-        await groupService.deleteGroup(req.params.id);
-
-        res.status(StatusCodes.NO_CONTENT).send();
+        const [isGroupDeleted] = await groupService.deleteGroup(req.params.id);
+        return isGroupDeleted ? res.status(StatusCodes.NO_CONTENT).send() : handleNullGroup(req, res);
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'deleteGroup', arguments);
+        return next(error);
     }
 }
 
 async function postGroup(req, res, next) {
     try {
         const newGroup = await groupService.addGroup(req.body);
-
-        res.status(StatusCodes.CREATED).send(newGroup);
+        return res.status(StatusCodes.CREATED).send(newGroup);
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'postGroup', arguments);
+        return next(error);
     }
 }
 
@@ -55,10 +60,10 @@ async function addUsersToGroup(req, res, next) {
     try {
         const { groupId, usersIds } = req.body;
         await groupService.addUsersToGroup(groupId, usersIds);
-
-        res.status(StatusCodes.OK).send();
+        return res.status(StatusCodes.OK).send();
     } catch (error) {
-        return next(error.message);
+        logControllerError(error, 'addUsersToGroup', arguments);
+        return next(error);
     }
 }
 

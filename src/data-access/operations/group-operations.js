@@ -31,7 +31,7 @@ async function deleteGroup(id) {
 }
 
 async function addUsersToGroup(groupId, usersIds) {
-    await groupModel.sequelize.transaction(async transaction => {
+    return groupModel.sequelize.transaction(async transaction => {
         const groupedUsers = usersIds.map(userId => ({ group_id: groupId, user_id: userId  }));
         await userGroupModel.bulkCreate(groupedUsers, { transaction });
     });
