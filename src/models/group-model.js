@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../data-access/connection');
+const { permissions } = require('../constants/group-constants');
 
 const groupModel = sequelize.define(
     'group',
@@ -14,7 +15,7 @@ const groupModel = sequelize.define(
             unique: true
         },
         permissions: {
-            type: DataTypes.ARRAY(DataTypes.ENUM(['READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES']))
+            type: DataTypes.ARRAY(DataTypes.ENUM(permissions))
         }
     },
     {
