@@ -13,6 +13,10 @@ async function getUser(id) {
     return userModel.findByPk(id, { include: groupAssociation });
 }
 
+async function getUserByCreds(login, password) {
+    return userModel.findOne({ where: { login, password } });
+}
+
 async function addUser(userData) {
     return userModel.create(userData);
 }
@@ -43,6 +47,7 @@ async function getAutoSuggestedUsers(loginSubstring, limit) {
 
 module.exports = {
     getUser,
+    getUserByCreds,
     addUser,
     updateUser,
     deleteUser,

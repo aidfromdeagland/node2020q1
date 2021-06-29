@@ -8,7 +8,8 @@ function handleNullUser(req, res) {
 
 async function getUser(req, res, next) {
     try {
-        const user = await userService.getUser(req.params.id);
+        const { id } = req.params;
+        const user = await userService.getUser(id);
         return user ? res.send(user) : handleNullUser(req, res);
     } catch (error) {
         logControllerError(error, 'getUser', arguments);
@@ -18,8 +19,9 @@ async function getUser(req, res, next) {
 
 async function updateUser(req, res, next) {
     try {
-        const [isUserUpdated] = await userService.updateUser(req.params.id, req.body);
-        return isUserUpdated ? res.send(req.params.id) : handleNullUser(req, res);
+        const { id } = req.params;
+        const [isUserUpdated] = await userService.updateUser(id, req.body);
+        return isUserUpdated ? res.send(id) : handleNullUser(req, res);
     } catch (error) {
         logControllerError(error, 'updateUser', arguments);
         return next(error);
@@ -28,7 +30,8 @@ async function updateUser(req, res, next) {
 
 async function deleteUser(req, res, next) {
     try {
-        const [isUserDeleted] = await userService.deleteUser(req.params.id);
+        const { id } = req.params;
+        const [isUserDeleted] = await userService.deleteUser(id);
         return isUserDeleted ? res.status(StatusCodes.NO_CONTENT).send() : handleNullUser(req, res);
     } catch (error) {
         logControllerError(error, 'deleteUser', arguments);

@@ -4,6 +4,10 @@ async function getUser(id) {
     return database.getUser(id);
 }
 
+async function getUserByCreds(login, password) {
+    return database.getUserByCreds(login, password);
+}
+
 async function addUser(userData) {
     return database.addUser(userData);
 }
@@ -22,6 +26,7 @@ async function getAutoSuggestedUsers(loginSubstring, limit) {
 
 module.exports = {
     getUser,
+    getUserByCreds,
     addUser,
     updateUser,
     deleteUser,

@@ -1,5 +1,5 @@
-const groupService = require('../services/group-service/group-service');
 const { StatusCodes } = require('http-status-codes');
+const groupService = require('../services/group-service/group-service');
 const { logControllerError } = require('../middlewares/logger');
 
 function handleNullGroup(req, res) {
@@ -18,7 +18,8 @@ async function getAllGroups(req, res, next) {
 
 async function getGroup(req, res, next) {
     try {
-        const group = await groupService.getGroup(req.params.id);
+        const { id } = req.params;
+        const group = await groupService.getGroup(id);
         return group ? res.send(group) : handleNullGroup(req, res);
     } catch (error) {
         logControllerError(error, 'getGroup', arguments);
@@ -28,8 +29,9 @@ async function getGroup(req, res, next) {
 
 async function updateGroup(req, res, next) {
     try {
-        const [isGroupUpdated] = await groupService.updateGroup(req.params.id, req.body);
-        return isGroupUpdated ? res.send(req.params.id) : handleNullGroup(req, res);
+        const { id } = req.params;
+        const [isGroupUpdated] = await groupService.updateGroup(id, req.body);
+        return isGroupUpdated ? res.send(id) : handleNullGroup(req, res);
     } catch (error) {
         logControllerError(error, 'updateGroup', arguments);
         return next(error);
@@ -38,7 +40,8 @@ async function updateGroup(req, res, next) {
 
 async function deleteGroup(req, res, next) {
     try {
-        const [isGroupDeleted] = await groupService.deleteGroup(req.params.id);
+        const { id } = req.params;
+        const [isGroupDeleted] = await groupService.deleteGroup(id);
         return isGroupDeleted ? res.status(StatusCodes.NO_CONTENT).send() : handleNullGroup(req, res);
     } catch (error) {
         logControllerError(error, 'deleteGroup', arguments);
@@ -60,7 +63,7 @@ async function addUsersToGroup(req, res, next) {
     try {
         const { groupId, usersIds } = req.body;
         await groupService.addUsersToGroup(groupId, usersIds);
-        return res.status(StatusCodes.OK).send();
+        return res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
         logControllerError(error, 'addUsersToGroup', arguments);
         return next(error);
