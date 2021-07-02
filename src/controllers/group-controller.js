@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const groupService = require('../services/group-service/group-service');
+const groupService = require('../services/group-service');
 const { logControllerError } = require('../middlewares/logger');
 
 function handleNullGroup(req, res) {

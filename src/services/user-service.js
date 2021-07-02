@@ -1,4 +1,4 @@
-const database = require('../../data-access/operations/user-operations');
+const database = require('../data-access/operations/user-operations');
 
 async function getUser(id) {
     return database.getUser(id);

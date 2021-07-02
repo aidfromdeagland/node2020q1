@@ -1,4 +1,4 @@
-const userService = require('../services/user-service/user-service');
+const userService = require('../services/user-service');
 const { StatusCodes } = require('http-status-codes');
 const { logControllerError } = require('../middlewares/logger');
 
