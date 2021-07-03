@@ -7,10 +7,9 @@ function validate(schema) {
 
         if (error) {
             const errors = error.details.map(err => err.message);
-            res.status(StatusCodes.BAD_REQUEST).send({ errors });
-        } else {
-            return next();
+            return res.status(StatusCodes.BAD_REQUEST).send({ errors });
         }
+        return next();
     };
 }
 

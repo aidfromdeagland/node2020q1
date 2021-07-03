@@ -3,7 +3,7 @@ const groupService = require('../services/group-service');
 const { logControllerError } = require('../middlewares/logger');
 
 function handleNullGroup(req, res) {
-    res.status(StatusCodes.NOT_FOUND).send({ message: `There is no group with id ${req.params.id}` });
+    return res.status(StatusCodes.NOT_FOUND).send({ message: `There is no group with id ${req.params.id}` });
 }
 
 async function getAllGroups(req, res, next) {
