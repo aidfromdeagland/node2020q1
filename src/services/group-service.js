@@ -1,4 +1,4 @@
-const database = require('../../data-access/operations/group-operations');
+const database = require('../data-access/operations/group-operations');
 
 async function getAllGroups() {
     return database.getAllGroups();

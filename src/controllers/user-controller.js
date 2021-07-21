@@ -1,9 +1,9 @@
-const userService = require('../services/user-service/user-service');
+const userService = require('../services/user-service');
 const { StatusCodes } = require('http-status-codes');
 const { logControllerError } = require('../middlewares/logger');
 
 function handleNullUser(req, res) {
-    res.status(StatusCodes.NOT_FOUND).send({ message: `There is no user with id ${req.params.id}` });
+    return res.status(StatusCodes.NOT_FOUND).send({ message: `There is no user with id ${req.params.id}` });
 }
 
 async function getUser(req, res, next) {

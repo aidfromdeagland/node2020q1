@@ -1,4 +1,4 @@
-const database = require('../../data-access/operations/user-operations');
+const database = require('../data-access/operations/user-operations');
 
 async function getUser(id) {
     return database.getUser(id);
@@ -17,7 +17,7 @@ async function updateUser(id, userData) {
 }
 
 async function deleteUser(id) {
-    return await database.deleteUser(id);
+    return database.deleteUser(id);
 }
 
 async function getAutoSuggestedUsers(loginSubstring, limit) {

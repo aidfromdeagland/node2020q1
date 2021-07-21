@@ -13,7 +13,7 @@ function tokenVerification(req, res, next) {
             return next();
         });
     } else {
-        res.status(StatusCodes.UNAUTHORIZED).send({ message: ReasonPhrases.UNAUTHORIZED });
+        return res.status(StatusCodes.UNAUTHORIZED).send({ message: ReasonPhrases.UNAUTHORIZED });
     }
 }
 

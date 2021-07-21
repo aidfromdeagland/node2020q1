@@ -1,6 +1,6 @@
 const  jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const userService = require('../services/user-service/user-service');
+const userService = require('../services/user-service');
 const { logControllerError } = require('../middlewares/logger');
 
 
